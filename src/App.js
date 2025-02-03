@@ -1,4 +1,5 @@
 import React from "react";
+import Web3 from "web3";
 import "./App.css"; // Make sure to create a CSS file for styling
 import {useState} from "react";
 

@@ -2,11 +2,16 @@ import React from "react";
 import Web3 from "web3";
 import "./App.css"; // Make sure to create a CSS file for styling
 import {useState} from "react";
-
-
+import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import Regis from "./Regis";
 
 const App = () => {
-  
+  const navigate = useNavigate();
+
+  const handleregis = () => {
+    navigate('/Regis'); 
+  };
+
   return (
     <div className="app">
       {/* Header Section */}
@@ -48,7 +53,7 @@ const App = () => {
           <p className="terms">
             By signing-in you agree to the Carrier SHOP Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.
           </p>
-          <button className="create-account">Create your account</button>
+          <button className="create-account" onClick={handleregis}>Create your account</button>
         </div>
       </main>
 
@@ -57,7 +62,7 @@ const App = () => {
         <nav className="nav-bar">
           <button className="nav-item">Home</button>
           <button className="nav-item">Search</button>
-          <button className="nav-item">+ Sell</button>
+          <button className="nav-item">Sell</button>
           <button className="nav-item">Cart</button>
           <button className="nav-item">Profile</button>
         </nav>
@@ -66,5 +71,16 @@ const App = () => {
   );
 };
 
-export default App;
+const Main = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/Regis" element={<Regis />} />
+        <Route path="/" element={<App />} />
+      </Routes>
+    </Router>
+  );
+};
+
+export default Main;
 

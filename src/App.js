@@ -1,70 +1,118 @@
-import React from "react";
-import Web3 from "web3";
+import React, { useState, useEffect } from "react";
+
 import "./App.css"; // Make sure to create a CSS file for styling
-import {useState} from "react";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
 import Regis from "./Regis";
+import ProfileP from "./ProfileP";
+
+
 
 const App = () => {
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+  //handling page change
   const navigate = useNavigate();
-
+  
   const handleregis = () => {
-    navigate('/Regis'); 
+    navigate('/'); 
+  };
+  const handleregis2 = () => {
+    navigate('/ProfileP'); 
   };
 
+  // Simulate fetching car data based on tokenId
+  const fetchCars = async () => {
+    setLoading(true);
+
+    // Simulate fetching data
+    const carData = [
+      {
+        tokenId: 1,
+        name: "car",
+        price: 1488,
+        image: "https://via.placeholder.com/150",
+      },
+      {
+        tokenId: 2,
+        name: "ship",
+        price: 888,
+        image: "https://via.placeholder.com/150",
+      },
+      {
+        tokenId: 3,
+        name: "boat",
+        price: 849,
+        image: "https://via.placeholder.com/150",
+      },
+      {
+        tokenId: 4,
+        name: "piko",
+        price: 693,
+        image: "https://via.placeholder.com/150",
+      },
+      {
+        tokenId: 5,
+        name: "GTR",
+        price: 469,
+        image: "https://via.placeholder.com/150",
+      },
+      {
+        tokenId: 6,
+        name: "AE86",
+        price: 450,
+        image: "https://via.placeholder.com/150",
+      },
+    ];
+
+    // Simulate delay (e.g., blockchain call)
+    setTimeout(() => {
+      setCars(carData);
+      setLoading(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    fetchCars();
+  }, []);
+
   return (
-    <div className="app">
-      {/* Header Section */}
-      <header className="header">
-        <h1 className="app-title">Vehicle App</h1>
+    <div className="App">
+      {/* Navbar */}
+      <div className="navbar">
+        <span className="app-title">Vehicle App</span>
         <button className="connect-wallet">Connect Wallet</button>
-      </header>
+      </div>
 
-      {/* Sign In Section */}
-      <main className="sign-in-container">
-        <div className="sign-in-box">
-          <h2 className="sign-in-title">Sign In</h2>
-          <form className="sign-in-form">
-            <label htmlFor="email" className="form-label">
-              E-mail
-            </label>
-            <input
-              type="email"
-              id="email"
-              placeholder="Enter your email"
-              className="form-input"
-              //onChange={(Event) =>{setName(Event.target.value)}}
-            />
+      {/* The car and men  */}
+      <div className="hero-section">
+      <img src="/homecar.png" alt="My Description" />
+      </div>
 
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              className="form-input"
-            />
-
-            <button type="submit" className="sign-in-button">
-              SIGN IN
-            </button>
-          </form>
-          <p className="terms">
-            By signing-in you agree to the Carrier SHOP Conditions of Use & Sale. Please see our Privacy Notice, our Cookies Notice and our Interest-Based Ads Notice.
-          </p>
-          <button className="create-account" onClick={handleregis}>Create your account</button>
-        </div>
-      </main>
+      {/* Top Sellers Section */}
+      <h2 className="section-title">TOP SELLERS</h2>
+      <div className="car-list">
+        {loading ? (
+          <p>Loading cars...</p>
+        ) : (
+          cars.map((car) => (
+            <div key={car.tokenId} className="car-card">
+              <img src={car.image} alt={car.name} className="car-image" />
+              <h3>{car.name}</h3>
+              <p>${car.price}</p>
+              <button className="add-to-cart">purchase</button>
+            </div>
+          ))
+        )}
+      </div>
 
       {/* Footer */}
       <footer className="footer-nav">
         <nav className="nav-bar">
-          <button className="nav-item">Home</button>
+          <button className="nav-item"onClick={handleregis}>Home</button>
           <button className="nav-item">Search</button>
           <button className="nav-item">Sell</button>
           <button className="nav-item">Cart</button>
-          <button className="nav-item">Profile</button>
+          <button className="nav-item"onClick={handleregis2}>Profile</button>
         </nav>
       </footer>
     </div>
@@ -77,6 +125,7 @@ const Main = () => {
       <Routes>
         <Route path="/Regis" element={<Regis />} />
         <Route path="/" element={<App />} />
+        <Route path="/ProfileP" element={<ProfileP />} />
       </Routes>
     </Router>
   );
